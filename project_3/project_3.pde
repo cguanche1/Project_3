@@ -12,7 +12,7 @@ void setup(){
 }
 
 void draw(){
- 
+  
 } 
 
 void receive(byte[] data, String HOST_IP, int PORT_RX){

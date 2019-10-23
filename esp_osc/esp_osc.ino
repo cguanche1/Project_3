@@ -23,20 +23,32 @@ void setup() {
   WiFi.softAP(ssid, password);
   WiFi.softAPConfig(local_ip, gateway, subnet);
 
-
-  pinMode(32,INPUT);
+  pinMode(34,INPUT); //Bottom Force Sensors
+  pinMode(35,INPUT); //Top Force Sensors
+  pinMode(32,INPUT); //Black Photoelectric
+  pinMode(33,INPUT); //Red Photoelectric
+  pinMode(25,INPUT); //Blue Photoelectric
+  pinMode(26,INPUT); //Green Photoelectric
+  pinMode(27,INPUT); //Piezoelectric
     server.begin();
 }
 
 void loop(){
 
-    float x = analogRead(32);
+    float FB = analogRead(34);
+    float FT = analogRead(35);
+    float PBa = analogRead(32);
+    float PR = analogRead(33);
+    float PBu = analogRead(25);
+    float PG = analogRead(26);
+    float Pe = touchRead(27);
     
     udp.beginPacket("192.168.1.2",57222);
-    udp.print(String(x));
+    udp.print(String(FB) + " " + String(FT) + " " + String(PBa) + " " + String(PR) + " " + 
+    String(PBu) + " " + String(PG) + " " + String(Pe));
     udp.endPacket();
   
-  //Wait for 1 second
-  delay(1000);
+  //Wait for .1 seconds
+  delay(100);
   
 }
