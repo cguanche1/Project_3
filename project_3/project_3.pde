@@ -47,7 +47,7 @@ void receive(byte[] data, String HOST_IP, int PORT_RX){
   String value=new String(data);
   String[] values = split(value,' ');
   
-  for(int i = 0; i < values.length; i++){
+  for(int i = 0; i < values.length - 1; i++){
    print(values[i] + " " );
    currents[i][0] = float(values[i]);
    if(currents[i][0] > currents[i][1]){
@@ -57,7 +57,9 @@ void receive(byte[] data, String HOST_IP, int PORT_RX){
      currents[i][2] = currents[i][0];
    }
   }
-  print("\n");
+  
+  Pe = float(values[6]);
+  print(values[6] + "\n");
   
   if(x == width || x == 0){
    x_adder = -1 * x_adder;
@@ -68,5 +70,32 @@ void receive(byte[] data, String HOST_IP, int PORT_RX){
 }
 
 void analyze(){
+  
+  float r,g,b,a;
+  
+  float w; //some value between 1 and 10
+  
+  
+  if(Pe == 1.0){
+    r = random(1,255);
+    g = random(1,255);
+    b = random(1,255);
+    a = random(1,255);
+  }
+  else{
+   float rangeR = abs(currents[3][1] - currents[3][2]);
+   float rangeG = abs(currents[5][1] - currents[5][2]); 
+   float rangeB = abs(currents[4][1] - currents[4][2]);
+   float rangeA = abs(currents[2][1] - currents[2][2]);
+   
+   r = (currents[3][0] / rangeR) * 255;
+   g = (currents[5][0] / rangeG) * 255;
+   b = (currents[4][0] / rangeB) * 255;
+   a = (currents[2][0] / rangeA) * 255;
+  }
+  
+  fill(r,g,b,a);
+  stroke(r,g,b,a);
+  line(x,0,x,height);
   
 }
