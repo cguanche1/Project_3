@@ -35,6 +35,7 @@ void setup() {
 
 void loop(){
 
+    Serial.print("Reading Values");
     float FB = analogRead(34);
     float FT = analogRead(35);
     float PBa = analogRead(32);
@@ -47,7 +48,8 @@ void loop(){
     udp.print(String(FB) + " " + String(FT) + " " + String(PBa) + " " + String(PR) + " " + 
     String(PBu) + " " + String(PG) + " " + String(Pe));
     udp.endPacket();
-  
+
+    Serial.print("Sent packet");
   //Wait for .1 seconds
   delay(100);
   
